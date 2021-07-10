@@ -16,45 +16,73 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            console.log("hello");
-            $.ajax({
-                type: "GET",
-                url: "/GetAllProducts",
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                success: function (products) {                   
-                    console.log(products)
-                    $.each(products, function (i, item) {
-                    var rows = "<tr>"                      
-                    + "<td class='prtoducttd'>" + item.name + "</td>"  
-                    + "<td class='prtoducttd'>" + item.price + "</td>"  
-                    + "</tr>";  
-                    $('#tblProduct tbody').append(rows);
+            
+
+            $("#dataTable").hide();
+
+            $("#getAllProducts").click(function () {                
+                $("#dataTable").show();
+                $.ajax({
+                    type: "GET",
+                    url: "/Product/GetAllProducts",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                        success: function (products) {
+                            console.log(products)
+                            $.each(products, function (i, item) {
+                                var rows = "<tr>"
+                                    + "<td class='prtoducttd'>" + item.name + "</td>"
+                                    + "<td class='prtoducttd'>" + item.price + "</td>"
+                                    + "</tr>";
+                                $('#tblProduct tbody').append(rows);
+                            });
+                        },
+                        error: function () {
+                            alert("Error while fetching data");
+                        }
+                    });
+                    return false;
                 });
-                },
-                error: function () {
-                    alert("Error while fetching data");
-                }
             });
-            return false;
-        });
+
+
+           
 
 
     </script>
 </head>
 <body>
-    <div class="container">
-        <table class="table table-hover" id="tblProduct">
-            <thead>
-                <tr>
-                    <th> Product Name </th>
-                    <th> Product Price </th>
-                </tr>
-            </thead>
-            <tbody>
+    <div class="container">        
+        <div class="container">
+            <form style="padding : 3rem">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Product Name</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Product Name">                    
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Product price</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Product price ">
+                </div>
                 
-            </tbody>
-        </table>
+
+                <button id="getAllProducts" type="submit" class=" btn btn-primary" style="margin-top:5px">Get All products</button>
+            </form>
+        </div>
+
+        <div id="dataTable" class="container" style="padding:3rem;">
+            <table class="table table-hover" id="tblProduct">
+                <thead>
+                    <tr>
+                        <th> Product Name </th>
+                        <th> Product Price </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
     </div>
+    </div>
+    
 </body>
 </html>
