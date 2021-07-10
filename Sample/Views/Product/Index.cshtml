@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Sample.Models.ProductModel>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            console.log("hello");
+            $.ajax({
+                type: "GET",
+                url: "/GetAllProducts",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (products) {                   
+                    console.log(products)
+                    $.each(products, function (i, item) {
+                    var rows = "<tr>"                      
+                    + "<td class='prtoducttd'>" + item.name + "</td>"  
+                    + "<td class='prtoducttd'>" + item.price + "</td>"  
+                    + "</tr>";  
+                    $('#tblProduct tbody').append(rows);
+                });
+                },
+                error: function () {
+                    alert("Error while fetching data");
+                }
+            });
+            return false;
+        });
+
+
+    </script>
+</head>
+<body>
+    <div class="container">
+        <table class="table table-hover" id="tblProduct">
+            <thead>
+                <tr>
+                    <th> Product Name </th>
+                    <th> Product Price </th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
